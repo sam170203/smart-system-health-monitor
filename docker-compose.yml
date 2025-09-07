@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  smart-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile.enhanced
+    container_name: smart-system-monitor
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./logs:/app/logs
+      - ./models:/app/models
+      - ./config:/app/config
+      - ./.env:/app/.env
+    environment:
+      - MONITORING_INTERVAL=300
+      - DASHBOARD_PORT=8501
+      - DASHBOARD_HOST=0.0.0.0
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: Add a separate monitoring service
+  monitor-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.enhanced
+    container_name: monitor-service
+    command: ["python", "monitor_enhanced.py"]
+    volumes:
+      - ./logs:/app/logs
+      - ./models:/app/models
+      - ./config:/app/config
+      - ./.env:/app/.env
+    environment:
+      - MONITORING_INTERVAL=300
+    restart: unless-stopped
+    depends_on:
+      - smart-monitor
+
+  # Optional: Add a database for persistent storage
+  # postgres:
+  #   image: postgres:15-alpine
+  #   container_name: monitor-db
+  #   environment:
+  #     POSTGRES_DB: system_monitor
+  #     POSTGRES_USER: monitor
+  #     POSTGRES_PASSWORD: monitor_password
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   restart: unless-stopped
+
+# volumes:
+#   postgres_data:

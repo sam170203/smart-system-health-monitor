@@ -1,0 +1,43 @@
+# Core dependencies
+streamlit>=1.35.0
+pandas>=2.3.1
+numpy>=1.24.4
+matplotlib>=3.10.3
+seaborn>=0.13.2
+plotly>=5.17.0
+
+# Machine Learning & Analytics
+scikit-learn>=1.7.0
+joblib>=1.5.1
+scipy>=1.10.0
+
+# System monitoring
+psutil>=5.9.0
+
+# Notifications
+requests>=2.31.0
+python-dotenv>=1.0.0
+
+# Data processing
+python-dateutil>=2.9.0
+pytz>=2025.2
+
+# Advanced Analytics
+isolation-forest>=0.1.0
+
+# Optional dependencies for enhanced features
+# Uncomment if you want to use these features:
+# smtplib (built-in)
+# email (built-in)
+# logging (built-in)
+# pathlib (built-in)
+# typing (built-in)
+# datetime (built-in)
+# time (built-in)
+# os (built-in)
+# sys (built-in)
+# subprocess (built-in)
+# platform (built-in)
+# csv (built-in)
+# json (built-in)
+# warnings (built-in)

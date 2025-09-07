@@ -1,150 +1,325 @@
-# 🧠 Smart System Health Monitor
+# 🧠 Smart System Health Monitor v2.0
 
-A real-time system health monitoring tool that tracks CPU, RAM, Disk, and Network usage, logs data into CSV, predicts future usage using machine learning, sends Telegram alerts for threshold breaches, and presents visualizations on a beautiful **Streamlit dashboard**.
+A comprehensive, real-time system health monitoring solution that tracks CPU, RAM, Disk, and Network usage with advanced machine learning predictions, multi-channel alerts, and a beautiful interactive dashboard. Now with enhanced features, better deployment options, and cross-platform support!
+
+## ✨ What's New in v2.0
+
+* 🎨 **Enhanced Dashboard**: Interactive charts with Plotly, real-time updates, and better UX
+* 🤖 **Advanced ML**: Multiple algorithms, better predictions, and confidence intervals
+* 📧 **Multi-Channel Alerts**: Telegram, Email, and Webhook support
+* 🐳 **Easy Deployment**: Docker, Docker Compose, and local deployment options
+* 🔧 **Cross-Platform**: Works on Windows, Linux, and macOS
+* ⚙️ **Configuration Management**: Centralized config with environment variables
+* 📊 **More Metrics**: Temperature, load average, process count, and more
+* 🏥 **Health Analysis**: Intelligent system health scoring and recommendations
 
 ## 📦 Features
 
-* 🔤️ **Resource Monitoring**: Bash script tracks CPU, memory, disk, and network usage.
-* 📊 **Streamlit Dashboard**: Live visual analytics of system metrics.
-* 🧠 **ML Predictions**: Predicts future CPU usage using a trained ML model.
-* 📈 **Graphical Plots**: Plots trends of CPU and RAM usage with suggestions.
-* 📩 **Telegram Alerts**: Sends alerts when thresholds are exceeded.
-* 🔄 **Auto Logging**: Logs every 5 mins via cron.
-* 🧹 **Auto Cleanup**: Supports auto-deletion of old logs (optional).
-* 🛣️ **Docker Support**: Runs inside a lightweight container (optional).
-* 📁 **GitHub Repo**: [https://github.com/sam170203/smart-system-health-monitor](https://github.com/sam170203/smart-system-health-monitor)
+### 🔍 **Core Monitoring**
+* **Real-time Resource Tracking**: CPU, RAM, Disk, Network usage
+* **Advanced Metrics**: Temperature, load average, process count
+* **Cross-Platform Support**: Windows, Linux, macOS
+* **Intelligent Logging**: Automatic cleanup and retention management
 
----
+### 📊 **Visualization & Analytics**
+* **Interactive Dashboard**: Beautiful Streamlit interface with Plotly charts
+* **Real-time Updates**: Live monitoring with auto-refresh
+* **Historical Analysis**: Trend analysis and pattern recognition
+* **Health Scoring**: Intelligent system health assessment
+
+### 🤖 **Machine Learning**
+* **Multiple Algorithms**: Random Forest, Gradient Boosting, Linear Regression
+* **Predictive Analytics**: Future resource usage predictions
+* **Confidence Intervals**: Uncertainty quantification for predictions
+* **Auto-Retraining**: Models improve over time with new data
+
+### 🚨 **Smart Alerting**
+* **Multi-Channel Notifications**: Telegram, Email, Webhooks
+* **Intelligent Thresholds**: Configurable alert levels
+* **Rich Messages**: Detailed alerts with recommendations
+* **Alert History**: Track and analyze past alerts
+
+### 🚀 **Deployment Options**
+* **Docker**: Containerized deployment with Docker Compose
+* **Local**: Direct Python installation
+* **Cloud Ready**: Easy deployment to cloud platforms
+* **Auto-Setup**: Automated installation and configuration
 
 ## 🛠️ Tech Stack
 
-* **Linux (WSL2) + Bash**
-* **Python 3.10**
-* **Streamlit**
-* **Scikit-learn, Pandas, Matplotlib, Seaborn**
-* **Docker (optional)**
-* **Telegram Bot API**
+* **Backend**: Python 3.8+, psutil, pandas, numpy
+* **ML**: scikit-learn, joblib
+* **Frontend**: Streamlit, Plotly
+* **Notifications**: requests, smtplib
+* **Deployment**: Docker, Docker Compose
+* **Monitoring**: Cross-platform system monitoring
 
----
+## 🚀 Quick Start
 
-## 🚀 Setup Instructions
-
-### ⚖️ Prerequisites
-
-* Python 3.10+
-* pip
-* `virtualenv`
-* Telegram Bot Token & Chat ID
-
----
-
-### ⚙️ Installation (without Docker)
+### Option 1: Docker Compose (Recommended)
 
 ```bash
-# Clone the repo
+# Clone the repository
 git clone https://github.com/sam170203/smart-system-health-monitor.git
 cd smart-system-health-monitor
 
-# Create and activate virtual environment
-python3 -m venv venv
-source venv/bin/activate
+# Copy and edit configuration
+cp env.example .env
+# Edit .env with your settings
 
-# Install dependencies
-pip install -r python_analytics/requirements.txt
+# Deploy with Docker Compose
+docker-compose up -d
 
-# Train ML model (first time only)
-python3 python_analytics/train_model.py
+# Access dashboard at http://localhost:8501
 ```
 
----
-
-### 🔤️ Run Dashboard
+### Option 2: Local Installation
 
 ```bash
-streamlit run python_analytics/dashboard.py
+# Clone the repository
+git clone https://github.com/sam170203/smart-system-health-monitor.git
+cd smart-system-health-monitor
+
+# Run automated setup
+python setup.py
+
+# Start the dashboard
+streamlit run src/dashboard.py
 ```
 
-Visit [http://localhost:8501](http://localhost:8501)
+### Option 3: Windows Deployment
 
----
+```cmd
+# Clone the repository
+git clone https://github.com/sam170203/smart-system-health-monitor.git
+cd smart-system-health-monitor
 
-### 📋 Monitor System Resources (every 5 mins)
-
-Add to crontab:
-
-```bash
-crontab -e
+# Run Windows deployment script
+deploy.bat
 ```
 
-Add:
+## ⚙️ Configuration
 
-```bash
-*/5 * * * * /bin/bash ~/smart-system-health-monitor/monitor.sh
-```
+### Environment Variables
 
----
-
-### 📧 Telegram Alerts
-
-Add your `BOT_TOKEN` and `CHAT_ID` in `python_analytics/.env`:
+Create a `.env` file with your configuration:
 
 ```env
-BOT_TOKEN=your_bot_token
-CHAT_ID=your_chat_id
+# Monitoring Settings
+MONITORING_INTERVAL=300
+LOG_RETENTION_DAYS=30
+
+# Alert Thresholds
+CPU_THRESHOLD=80.0
+RAM_THRESHOLD=80.0
+DISK_THRESHOLD=90.0
+NETWORK_THRESHOLD=500000
+
+# Telegram Notifications
+TELEGRAM_BOT_TOKEN=your_bot_token_here
+TELEGRAM_CHAT_ID=your_chat_id_here
+
+# Email Notifications (Optional)
+EMAIL_ENABLED=false
+SMTP_SERVER=smtp.gmail.com
+SMTP_PORT=587
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASSWORD=your_app_password
+EMAIL_TO=recipient@example.com
+
+# Dashboard Settings
+DASHBOARD_PORT=8501
+DASHBOARD_HOST=0.0.0.0
+
+# Machine Learning Settings
+ML_ENABLED=true
+PREDICTION_HORIZON=10
 ```
 
----
+### Setting Up Telegram Bot
 
-### 🛣️ Run with Docker (optional)
+1. Create a bot with [@BotFather](https://t.me/botfather)
+2. Get your bot token
+3. Get your chat ID by messaging [@userinfobot](https://t.me/userinfobot)
+4. Add both to your `.env` file
 
-```bash
-docker build -t system-health-monitor .
-docker run -d -p 8501:8501 --env-file python_analytics/.env --name monitor system-health-monitor
-```
+### Setting Up Email Notifications
 
----
+1. Enable 2-factor authentication on your Gmail account
+2. Generate an app password
+3. Use your email and app password in the `.env` file
 
 ## 📁 Project Structure
 
 ```
 smart-system-health-monitor/
-├── monitor.sh                   # System stats logger
-├── logs/                        # Logs CSV
-├── python_analytics/           # Python scripts
-│   ├── dashboard.py            # Streamlit dashboard
-│   ├── analyze.py              # Data analyzer
-│   ├── alert.py                # Alert logic
-│   ├── telegram_alert.py       # Telegram notification
-│   ├── train_model.py          # Train ML model
-│   ├── cpu_predictor.pkl       # Trained model
-├── Dockerfile
-├── requirements.txt
+├── src/                         # Source code
+│   ├── __init__.py
+│   ├── monitor.py              # Enhanced monitoring
+│   ├── alerts.py               # Multi-channel alerting
+│   ├── ml_predictor.py         # ML predictions
+│   └── dashboard.py            # Enhanced dashboard
+├── logs/                       # Monitoring data
+├── models/                     # ML models
+├── config/                     # Configuration files
+├── config.py                   # Configuration management
+├── monitor_enhanced.py         # Enhanced monitoring script
+├── setup.py                    # Automated setup
+├── deploy.sh                   # Linux/macOS deployment
+├── deploy.bat                  # Windows deployment
+├── docker-compose.yml          # Docker Compose configuration
+├── Dockerfile.enhanced         # Enhanced Dockerfile
+├── requirements.txt            # Python dependencies
+├── env.example                 # Environment template
+└── README.md                   # This file
 ```
 
----
+## 🎯 Usage
+
+### Dashboard Features
+
+1. **Real-time Monitoring**: Live system metrics with auto-refresh
+2. **Historical Analysis**: Interactive charts showing trends over time
+3. **ML Predictions**: Future resource usage predictions with confidence intervals
+4. **Health Analysis**: System health scoring and recommendations
+5. **Alert Management**: View and manage alert history
+6. **Configuration**: Easy access to system settings
+
+### Monitoring Script
+
+The enhanced monitoring script (`monitor_enhanced.py`) provides:
+
+- Cross-platform system monitoring
+- Intelligent alerting
+- ML predictions
+- Automatic log cleanup
+- Comprehensive error handling
+
+### API Integration
+
+The system can be integrated with external services via webhooks:
+
+```python
+# Example webhook payload
+{
+    "timestamp": "2025-01-09T10:30:00",
+    "alerts": ["High CPU Usage: 85.2%"],
+    "metrics": {
+        "cpu_usage": 85.2,
+        "ram_usage": 67.8,
+        "disk_usage": 45.3
+    }
+}
+```
+
+## 🔧 Advanced Configuration
+
+### Custom Alert Thresholds
+
+```env
+# Customize alert thresholds
+CPU_THRESHOLD=75.0
+RAM_THRESHOLD=85.0
+DISK_THRESHOLD=95.0
+NETWORK_THRESHOLD=1000000
+```
+
+### ML Model Configuration
+
+```env
+# ML settings
+ML_ENABLED=true
+PREDICTION_HORIZON=15  # Predict 15 minutes ahead
+```
+
+### Monitoring Intervals
+
+```env
+# Adjust monitoring frequency
+MONITORING_INTERVAL=180  # Monitor every 3 minutes
+```
+
+## 🐳 Docker Deployment
+
+### Docker Compose (Recommended)
+
+```bash
+# Start all services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+```
+
+### Docker Only
+
+```bash
+# Build image
+docker build -f Dockerfile.enhanced -t smart-system-monitor .
+
+# Run container
+docker run -d \
+  --name smart-system-monitor \
+  -p 8501:8501 \
+  -v $(pwd)/logs:/app/logs \
+  -v $(pwd)/models:/app/models \
+  --env-file .env \
+  smart-system-monitor
+```
 
 ## 📊 Example Output
 
-* `logs/system_metrics.csv`:
+### Dashboard Screenshots
 
-  ```
-  timestamp,cpu,ram,disk,network_kb
-  2025-07-09 14:05:01,2.4,8.37,1,372558
-  2025-07-09 14:10:01,7.0,8.47,1,372568
-  ```
+The dashboard provides:
+- Real-time metrics with color-coded status
+- Interactive time-series charts
+- ML predictions with confidence intervals
+- System health analysis
+- Alert history and management
 
----
+### Log Data Format
+
+```csv
+timestamp,cpu_usage,ram_usage,disk_usage,network_rx_kb,network_tx_kb,load_average,process_count,temperature_c
+2025-01-09 10:30:00,25.4,67.8,45.3,125000,89000,1.2,156,45.2
+2025-01-09 10:35:00,28.1,68.2,45.4,127500,91200,1.3,158,46.1
+```
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our contributing guidelines:
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
 
 ## 📜 License
 
 MIT License – feel free to use, improve, and contribute.
 
----
+## 🆘 Support
 
-## 🤝 Acknowledgements
+- 📧 **Email**: Create an issue on GitHub
+- 💬 **Discussions**: Use GitHub Discussions
+- 📚 **Documentation**: Check the wiki
+- 🐛 **Bug Reports**: Use GitHub Issues
+
+## 🎉 Acknowledgments
 
 Special thanks to:
 
-* [Streamlit](https://streamlit.io)
-* [scikit-learn](https://scikit-learn.org)
-* [Telegram Bot API](https://core.telegram.org/bots/api)
+* [Streamlit](https://streamlit.io) - Amazing dashboard framework
+* [Plotly](https://plotly.com) - Interactive visualizations
+* [scikit-learn](https://scikit-learn.org) - Machine learning library
+* [psutil](https://psutil.readthedocs.io) - System monitoring
+* [Docker](https://docker.com) - Containerization platform
+
+---
+
+**Made with ❤️ by the Smart System Health Monitor Team**
